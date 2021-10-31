@@ -1,14 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-of-apps
+  name: argo-cd
+  namespace: default
 spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
   project: default
   source:
-    path: apps/
+    path: charts/argo-cd
     repoURL: https://github.com/gajewa/gitops.git
     targetRevision: HEAD
   syncPolicy:

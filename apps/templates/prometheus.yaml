@@ -1,16 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-of-apps
+  name: prometheus
+  namespace: default
 spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
   project: default
   source:
-    path: apps/
-    repoURL: https://github.com/gajewa/gitops.git
-    targetRevision: HEAD
+    chart: prometheus
+    helm:
+      values: |
+        pushgateway:
+          enabled: false
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 13.0.2
   syncPolicy:
     automated:
       prune: true
